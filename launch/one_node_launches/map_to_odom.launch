@@ -1,0 +1,16 @@
+<!-- map_to_odom.launch -->
+
+<launch>
+  <arg name="namespace" default=""      />
+  <arg name="x_pos"     default="-7.0"  />
+  <arg name="y_pos"     default="-1.0"  />
+  <arg name="z_pos"     default=" 0.0"  />
+  <arg name="yaw"       default=" 1.57" />
+
+  <node pkg="turtlebot_sim" type="simple_map_tf" name="map_to_odom" output="screen" ns="$(arg namespace)" >
+    <param name="x_pos" type="double" value="$(arg x_pos)" />
+    <param name="y_pos" type="double" value="$(arg y_pos)" />
+    <param name="z_pos" type="double" value="$(arg z_pos)" />
+    <param name="yaw"   type="double" value="$(arg yaw)"   />
+  </node>
+</launch>

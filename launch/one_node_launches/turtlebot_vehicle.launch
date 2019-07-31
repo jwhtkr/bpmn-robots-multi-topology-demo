@@ -1,0 +1,7 @@
+<!-- turtlebot_vehicle.launch -->
+
+<launch>
+  <arg name="namespace" />
+
+  <node pkg="turtlebot_sim" type="turtlebot_vehicle" name="turtlebot_vehicle" output="screen" ns="$(arg namespace)" />
+</launch>

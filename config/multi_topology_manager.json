@@ -1,0 +1,25 @@
+[
+  {
+    "name"      : "Robots",
+    "required"  : true,
+    "priority"  : 10,
+    "resources" :
+    [
+      {
+        "name"     : "robot1",
+        "category" : "",
+        "type"     : "",
+        "required" : true,
+        "priority" : 10,
+        "nodes" :
+        [
+          "go_to_goal",
+          "map_to_odom",
+          "unicyle_node",
+          "robot_state_publisher",
+          "turtlebot_vehicle"
+        ]
+      }
+    ]
+  }
+]

@@ -1,0 +1,44 @@
+<!-- demo.launch -->
+
+<launch>
+  <arg name="listener_output"     value="listener_output"     />
+  <arg name="resource_ask"        value="resource_ask"        />
+  <arg name="resource_take"       value="resource_take"       />
+  <arg name="resource_return"     value="resource_return"     />
+  <arg name="modify_robots_topic" value="modify_robots_topic" />
+  <arg name="modify_nodes_topic"  value="modify_nodes_topic"  />
+
+  <include file="$(find resource_manager_emulator)/launch/resource_manager_emulator.launch" >
+    <arg name="request_topic"       value="$(arg resource_ask)"  />
+    <arg name="get_resources_topic" value="$(arg resource_take)" />
+  </include>
+
+  <node name="behavior_listener" pkg="behavior_listener" type="behavior_listener_node.py" output="screen" >
+    <remap from="behaviors" to="$(arg listener_output)" />
+  </node>
+
+  <node name="multi_topology_behavior_manager" pkg="multi_topology_demo" type="multi_topology_demo_behavior_manager_node" output="screen" >
+    <param name="listening_topic"        value="$(arg listener_output)" />
+    <param name="resource_return_topic"  value="$(arg resource_return)" />
+    <param name="resource_request_topic" value="$(arg resource_ask)"    />
+    <param name="take_resources_topic"   value="$(arg resource_take)"   />
+    <param name="modify_nodes_topic"     value="$(arg modify_robots_topic)" />
+    <param name="config_file"            value="$(find multi_topology_demo)/config/multi_topology_manager.json" />
+  </node>
+
+  <include file="$(find master_thread_pool)/launch/master_thread_pool.launch" >
+    <arg name="service_provided_topic" value="$(arg modify_robots_topic)" />
+    <arg name="machine_pool_topic"     value="$(arg modify_nodes_topic)"  />
+  </include>
+
+  <include file="$(find machine_pool)/launch/machine_pool.launch" ns="desktop" >
+    <arg name="config_file"        value="$(find multi_topology_demo)/config/desktop_pool.json" />
+    <arg name="modify_nodes_topic" value="$(arg modify_nodes_topic)" />
+  </include>
+
+  <include file="$(find machine_pool)/launch/machine_pool.launch" ns="robot1" >
+    <arg name="config_file"        value="$(find multi_topology_demo)/config/robot.json" />
+    <arg name="modify_nodes_topic" value="$(arg modify_nodes_topic)" />
+  </include>
+
+</launch>

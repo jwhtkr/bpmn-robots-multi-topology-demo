@@ -1,0 +1,7 @@
+<!-- unicyle_node.launch -->
+
+<launch>
+  <arg name="namespace" default=""      />
+
+  <node pkg="dynamic_models" type="unicycle_dynamics" name="unicyle_node" output="screen" ns="$(arg namespace)" />
+</launch>

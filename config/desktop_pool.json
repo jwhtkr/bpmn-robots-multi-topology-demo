@@ -1,0 +1,18 @@
+{
+  "nodes" :
+  [
+    {
+      "name"           : "rviz",
+      "launch_command" : "roslaunch multi_topology_demo rviz.launch file:=Turtlebot_multi.rviz"
+    },
+    {
+      "name"           : "topology_graph",
+      "launch_command" : "roslaunch multi_topology_demo topology_graph.launch"
+    }
+  ],
+  "default_nodes" :
+  [
+    "rviz",
+    "topology_graph"
+  ]
+}
