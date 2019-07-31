@@ -3,6 +3,11 @@
 <launch>
   <arg name="namespace" default="" />
 
+  <include file="$(find turtlebot_launch)/launch/include/description.launch.xml">
+    <arg name="model" value="waffle_pi" />
+    <arg name="robot_tf_prefix" value="$(arg namespace)/"/>
+  </include>
+
   <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen" ns="$(arg namespace)" >
     <param name="publish_frequency" type="double" value="50.0" />
   </node>

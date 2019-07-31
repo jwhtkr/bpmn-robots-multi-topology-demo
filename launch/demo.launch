@@ -31,7 +31,7 @@
     <arg name="machine_pool_topic"     value="$(arg modify_nodes_topic)"  />
   </include>
 
-  <include file="$(find machine_pool)/launch/machine_pool.launch" ns="desktop" >
+  <include file="$(find machine_pool)/launch/machine_pool.launch" >
     <arg name="config_file"        value="$(find multi_topology_demo)/config/desktop_pool.json" />
     <arg name="modify_nodes_topic" value="$(arg modify_nodes_topic)" />
   </include>

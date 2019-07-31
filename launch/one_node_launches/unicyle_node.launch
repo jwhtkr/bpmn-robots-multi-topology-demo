@@ -3,5 +3,10 @@
 <launch>
   <arg name="namespace" default=""      />
 
+  <include file="$(find turtlebot_launch)/launch/include/description.launch.xml">
+    <arg name="model" value="waffle_pi" />
+    <arg name="robot_tf_prefix" value="$(arg namespace)/"/>
+  </include>
+
   <node pkg="dynamic_models" type="unicycle_dynamics" name="unicyle_node" output="screen" ns="$(arg namespace)" />
 </launch>
