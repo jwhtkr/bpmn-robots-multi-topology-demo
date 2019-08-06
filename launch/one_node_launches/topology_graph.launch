@@ -1,8 +1,0 @@
-<!-- topology_graph.launch -->
-
-<launch>
-  <arc name="namespace" />
-
-  <node name="topology_graph" pkg="go2goal" type="topology_goal_generator" output="screen" ns="$(arg namespace)" />
-</launch>
-

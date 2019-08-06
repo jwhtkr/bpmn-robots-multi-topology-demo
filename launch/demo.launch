@@ -1,12 +1,13 @@
 <!-- demo.launch -->
 
 <launch>
-  <arg name="listener_output"     value="listener_output"     />
-  <arg name="resource_ask"        value="resource_ask"        />
-  <arg name="resource_take"       value="resource_take"       />
-  <arg name="resource_return"     value="resource_return"     />
+  <arg name="listener_output"     value="listener_output"    />
+  <arg name="resource_ask"        value="resource_ask"       />
+  <arg name="resource_take"       value="resource_take"      />
+  <arg name="resource_return"     value="resource_return"    />
   <arg name="modify_robots_topic" value="modify_robots_topic" />
-  <arg name="modify_nodes_topic"  value="modify_nodes_topic"  />
+  <arg name="start_nodes_topic"   value="start_nodes_topic"  />
+  <arg name="end_nodes_topic"     value="end_nodes_topic"    />
 
   <include file="$(find resource_manager_emulator)/launch/resource_manager_emulator.launch" >
     <arg name="request_topic"       value="$(arg resource_ask)"  />
@@ -26,19 +27,50 @@
     <param name="config_file"            value="$(find multi_topology_demo)/config/multi_topology_manager.json" />
   </node>
 
-  <include file="$(find master_thread_pool)/launch/master_thread_pool.launch" >
-    <arg name="service_provided_topic" value="$(arg modify_robots_topic)" />
-    <arg name="machine_pool_topic"     value="$(arg modify_nodes_topic)"  />
+  <include file="$(find thread_pool)/launch/thread_pool.launch" >
+    <arg name="service_provided_topic"      value="$(arg modify_robots_topic)" />
+    <arg name="ros_node_server_start_topic" value="$(arg start_nodes_topic)"   />
+    <arg name="ros_node_server_kill_topic"  value="$(arg end_nodes_topic)"     />
+    <arg name="config_file"                 value="$(find multi_topology_demo)/config/thread_pool.json" />
   </include>
 
-  <include file="$(find machine_pool)/launch/machine_pool.launch" >
-    <arg name="config_file"        value="$(find multi_topology_demo)/config/desktop_pool.json" />
-    <arg name="modify_nodes_topic" value="$(arg modify_nodes_topic)" />
+  <include file="$(find node_server_core)/launch/ros_node_server.launch" ns="robot1" >
+    <arg name="start_node_list_srv_topic" value="$(arg start_nodes_topic)" />
+    <arg name="kill_srv_topic"            value="$(arg end_nodes_topic)"   />
   </include>
 
-  <include file="$(find machine_pool)/launch/machine_pool.launch" ns="robot1" >
-    <arg name="config_file"        value="$(find multi_topology_demo)/config/robot.json" />
-    <arg name="modify_nodes_topic" value="$(arg modify_nodes_topic)" />
+  <include file="$(find node_server_core)/launch/ros_node_server.launch" ns="robot2" >
+    <arg name="start_node_list_srv_topic" value="$(arg start_nodes_topic)" />
+    <arg name="kill_srv_topic"            value="$(arg end_nodes_topic)"   />
   </include>
 
+  <include file="$(find node_server_core)/launch/ros_node_server.launch" ns="robot3" >
+    <arg name="start_node_list_srv_topic" value="$(arg start_nodes_topic)" />
+    <arg name="kill_srv_topic"            value="$(arg end_nodes_topic)"   />
+  </include>
+
+  <include file="$(find node_server_core)/launch/ros_node_server.launch" ns="robot4" >
+    <arg name="start_node_list_srv_topic" value="$(arg start_nodes_topic)" />
+    <arg name="kill_srv_topic"            value="$(arg end_nodes_topic)"   />
+  </include>
+
+  <include file="$(find multi_topology_demo)/launch/robot_setup.launch" ns="robot1" >
+    <arg name="namespace" value="robot1" />
+  </include>
+
+  <include file="$(find multi_topology_demo)/launch/robot_setup.launch" ns="robot2" >
+    <arg name="namespace" value="robot2" />
+  </include>
+
+  <include file="$(find multi_topology_demo)/launch/robot_setup.launch" ns="robot3" >
+    <arg name="namespace" value="robot3" />
+  </include>
+
+  <include file="$(find multi_topology_demo)/launch/robot_setup.launch" ns="robot4" >
+    <arg name="namespace" value="robot4" />
+  </include>
+
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find turtlebot_launch)/rviz/Turtlebot_multi.rviz"/>
+
+  <node name="topology_graph" pkg="go2goal" type="topology_goal_generator" output="screen" />
 </launch>

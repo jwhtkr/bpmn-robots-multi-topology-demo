@@ -1,7 +1,0 @@
-<!-- rviz.launch -->
-
-<launch>
-  <arg name="namespace" />
-
-  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find turtlebot_launch)/rviz/Turtlebot_multi.rviz" ns="$(arg namespace)" />
-</launch>

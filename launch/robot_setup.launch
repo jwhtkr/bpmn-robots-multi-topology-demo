@@ -1,0 +1,13 @@
+<!-- robot_setup.launch -->
+
+<launch>
+  <arg name="namespace" default="" />
+
+  <param name="odom_frame" value="$(arg namespace)/odom" />
+  <param name="base_frame" value="$(arg namespace)/base_footprint" />
+
+  <include file="$(find turtlebot_launch)/launch/include/description.launch.xml" >
+    <arg name="model"           value="waffle_pi" />
+    <arg name="robot_tf_prefix" value="$(arg namespace)/" />
+  </include>
+</launch>
