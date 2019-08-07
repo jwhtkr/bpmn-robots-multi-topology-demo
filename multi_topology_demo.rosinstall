@@ -4,66 +4,66 @@
         version: master}
 
 ## Multi Topology Repos
-- git: {local-name: multi_topology/joystick_cntrl,
+- git: {local-name: joystick_cntrl,
         uri: 'git@gitlab.com:droge-robotics/turtle_joy.git',
         version: proj3}
 
-- git: {local-name: multi_topology/low_level_control,
+- git: {local-name: low_level_control,
         uri: 'git@gitlab.com:droge-robotics/low-level-control.git',
         version: proj3}
 
-- git: {local-name: multi_topology/setup_and_launch,
+- git: {local-name: setup_and_launch,
         uri: 'git@gitlab.com:droge-robotics/setup_and_launch.git',
         version: proj3}
 
-- git: {local-name: multi_topology/high_level_control,
+- git: {local-name: high_level_control,
         uri: 'git@gitlab.com:droge-robotics/high_level_control.git',
         version: proj3}
 
 # Turtlebot repos
-- git: {local-name: multi_topology/turtle/turtlebot3_sim,
+- git: {local-name: turtle/turtlebot3_sim,
         uri: 'https://github.com/ROBOTIS-GIT/turtlebot3_simulations.git',
         version: master}
 
-- git: {local-name: multi_topology/turtle/turtlebot_msgs,
+- git: {local-name: turtle/turtlebot_msgs,
         uri: 'https://github.com/ROBOTIS-GIT/turtlebot3_msgs.git',
         version: master}
 
-- git: {local-name: multi_topology/turtle/turtlebot3,
+- git: {local-name: turtle/turtlebot3,
         uri: 'https://github.com/ROBOTIS-GIT/turtlebot3.git',
         version: master}
 
 ## Architecture Repos
-- git: {local-name: architecture/behavior_manager,
+- git: {local-name: behavior_manager,
         uri: 'git@gitlab.com:droge-robotics/camunda/behavior_manager.git',
         version: james-dev}
 
-- git: {local-name: architecture/behavior_listener,
+- git: {local-name: behavior_listener,
         uri: 'git@gitlab.com:droge-robotics/camunda/behavior_listener.git',
         version: james-dev}
 
-- git: {local-name: architecture/behavior_pool,
+- git: {local-name: behavior_pool,
         uri: 'git@gitlab.com:droge-robotics/camunda/behavior_pool.git',
         version: james-dev}
 
-- git: {local-name: architecture/thread_pool,
+- git: {local-name: thread_pool,
         uri: 'git@gitlab.com:droge-robotics/camunda/thread_pool.git',
         version: james-dev}
 
 # Architecture Support Repos
-- git: {local-name: architecture/ros_node_server,
+- git: {local-name: ros_node_server,
         uri: 'git@gitlab.com:droge-robotics/general_research_code/ros_node_server.git',
         version: james-dev}
 
-- git: {local-name: architecture/bpmn_interface,
+- git: {local-name: bpmn_interface,
         uri: 'git@gitlab.com:droge-robotics/camunda/bpmn_interface.git',
         version: master}
 
-- git: {local-name: architecture/camunda_c_api,
+- git: {local-name: camunda_c_api,
         uri: 'git@gitlab.com:droge-robotics/camunda/camunda_c_api.git',
         version: master}
 
-- git: {local-name: architecture/architecture_msgs,
+- git: {local-name: architecture_msgs,
         uri: 'git@gitlab.com:droge-robotics/camunda/architecture_msgs.git',
         version: james-dev}
 
