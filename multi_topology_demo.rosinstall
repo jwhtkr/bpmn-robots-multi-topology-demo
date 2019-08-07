@@ -21,7 +21,7 @@
         version: proj3}
         
 - git: {local-name: multi_topology/network_topology_emulator,
-        uri: 'git@gitlab.com:droge-robotics/network-topolology-emulator.git'
+        uri: 'git@gitlab.com:droge-robotics/network-topolology-emulator.git',
         version: rebroadcasters}
 
 # Turtlebot repos
