@@ -67,3 +67,8 @@
         uri: 'git@gitlab.com:droge-robotics/camunda/architecture_msgs.git',
         version: james-dev}
 
+## Camunda
+- git: {local-name: ../our_camunda,
+        uri: 'git@gitlab.com:droge-robotics/camunda/our_camunda.git',
+        version: master}
+
