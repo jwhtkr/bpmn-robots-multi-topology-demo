@@ -38,6 +38,10 @@
         version: master}
 
 ## Architecture Repos
+- git: {local-name: architecture/architecture_emulator,
+        uri: 'git@gitlab.com:droge-robotics/camunda/architecture_emulator.git',
+        versior: james-dev}
+
 - git: {local-name: architecture/behavior_manager,
         uri: 'git@gitlab.com:droge-robotics/camunda/behavior_manager.git',
         version: james-dev}
