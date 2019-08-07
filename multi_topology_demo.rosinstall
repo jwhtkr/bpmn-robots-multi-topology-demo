@@ -25,7 +25,7 @@
         version: rebroadcasters}
 
 # Turtlebot repos
-- git: {local-name: turtle/turtlebot3_sim,
+- git: {local-name: multi_topology/turtle/turtlebot3_sim,
         uri: 'https://github.com/ROBOTIS-GIT/turtlebot3_simulations.git',
         version: master}
 
