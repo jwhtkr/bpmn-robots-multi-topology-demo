@@ -44,7 +44,7 @@
 
 - git: {local-name: behavior_pool,
         uri: 'git@gitlab.com:droge-robotics/camunda/behavior_pool.git',
-        version: james-dev}
+        version: master}
 
 - git: {local-name: thread_pool,
         uri: 'git@gitlab.com:droge-robotics/camunda/thread_pool.git',
