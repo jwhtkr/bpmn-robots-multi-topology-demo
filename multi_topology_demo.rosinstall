@@ -47,7 +47,7 @@
         version: james-dev}
 
 - git: {local-name: architecture/thread_pool,
-        uri: 'git@gitlab.com:droge-robotics/camunda/thread_pool.git'
+        uri: 'git@gitlab.com:droge-robotics/camunda/thread_pool.git',
         version: james-dev}
 
 # Architecture Support Repos
