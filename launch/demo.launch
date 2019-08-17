@@ -8,23 +8,26 @@
   <arg name="modify_robots_topic" value="modify_robots_topic" />
   <arg name="start_nodes_topic"   value="start_nodes_topic"  />
   <arg name="end_nodes_topic"     value="end_nodes_topic"    />
+  <arg name="dynamics_model"      value="unicycle_dynamics" />
 
   <include file="$(find resource_manager_emulator)/launch/resource_manager_emulator.launch" >
-    <arg name="request_topic"       value="$(arg resource_ask)"  />
-    <arg name="get_resources_topic" value="$(arg resource_take)" />
+    <arg name="request_topic"          value="$(arg resource_ask)"     />
+    <arg name="get_resources_topic"    value="$(arg resource_take)"    />
+    <arg name="return_resources_topic" value="$(arg resource_return)" />
   </include>
 
   <node name="behavior_listener" pkg="behavior_listener" type="behavior_listener_node.py" output="screen" >
     <remap from="behaviors" to="$(arg listener_output)" />
   </node>
 
-  <node name="multi_topology_behavior_manager" pkg="multi_topology_demo" type="multi_topology_demo_behavior_manager_node" output="screen" >
-    <param name="listening_topic"        value="$(arg listener_output)" />
-    <param name="resource_return_topic"  value="$(arg resource_return)" />
-    <param name="resource_request_topic" value="$(arg resource_ask)"    />
-    <param name="take_resources_topic"   value="$(arg resource_take)"   />
-    <param name="modify_nodes_topic"     value="$(arg modify_robots_topic)" />
-    <param name="config_file"            value="$(find multi_topology_demo)/config/multi_topology_manager.json" />
+  <node name="multi_topology_behavior_manager" pkg="multi_topology_demo" type="multi_topology_demo_behavior_manager_node" output="screen" launch-prefix="" >
+    <param name="listening_topic"         value="$(arg listener_output)"     />
+    <param name="status_topic"            value="status_topic"               />
+    <param name="get_resources_topic"     value="$(arg resource_ask)"        />
+    <param name="give_resources_topic"    value="$(arg resource_return)"     />
+    <param name="give_up_resources_topic" value="$(arg resource_take)"       />
+    <param name="modify_robots_topic"     value="$(arg modify_robots_topic)" />
+    <param name="config_file_path"        value="$(find multi_topology_demo)/config/multi_topology_manager.json" />
   </node>
 
   <include file="$(find thread_pool)/launch/thread_pool.launch" >
@@ -34,40 +37,48 @@
     <arg name="config_file"                 value="$(find multi_topology_demo)/config/thread_pool.json" />
   </include>
 
-  <include file="$(find node_server_core)/launch/ros_node_server.launch" ns="robot1" >
-    <arg name="start_node_list_srv_topic" value="$(arg start_nodes_topic)" />
-    <arg name="kill_srv_topic"            value="$(arg end_nodes_topic)"   />
-  </include>
-
-  <include file="$(find node_server_core)/launch/ros_node_server.launch" ns="robot2" >
-    <arg name="start_node_list_srv_topic" value="$(arg start_nodes_topic)" />
-    <arg name="kill_srv_topic"            value="$(arg end_nodes_topic)"   />
-  </include>
-
-  <include file="$(find node_server_core)/launch/ros_node_server.launch" ns="robot3" >
-    <arg name="start_node_list_srv_topic" value="$(arg start_nodes_topic)" />
-    <arg name="kill_srv_topic"            value="$(arg end_nodes_topic)"   />
-  </include>
-
-  <include file="$(find node_server_core)/launch/ros_node_server.launch" ns="robot4" >
-    <arg name="start_node_list_srv_topic" value="$(arg start_nodes_topic)" />
-    <arg name="kill_srv_topic"            value="$(arg end_nodes_topic)"   />
-  </include>
-
   <include file="$(find multi_topology_demo)/launch/robot_setup.launch" ns="robot1" >
-    <arg name="namespace" value="robot1" />
+    <arg name="namespace"         value="robot1"                   />
+    <arg name="start_nodes_topic" value="$(arg start_nodes_topic)" />
+    <arg name="end_nodes_topic"   value="$(arg end_nodes_topic)"   />
+    <arg name="x_pos"             value="-7.0"                     />
+    <arg name="y_pos"             value="-1.0"                     />
+    <arg name="z_pos"             value="0.0"                      />
+    <arg name="yaw"               value="1.57"                     />
+    <arg name="dynamics_model"    value="$(arg dynamics_model)"    />
   </include>
 
   <include file="$(find multi_topology_demo)/launch/robot_setup.launch" ns="robot2" >
-    <arg name="namespace" value="robot2" />
+    <arg name="namespace"         value="robot2"                   />
+    <arg name="start_nodes_topic" value="$(arg start_nodes_topic)" />
+    <arg name="end_nodes_topic"   value="$(arg end_nodes_topic)"   />
+    <arg name="x_pos"             value="7.0"                     />
+    <arg name="y_pos"             value="-1.0"                     />
+    <arg name="z_pos"             value="0.0"                      />
+    <arg name="yaw"               value="1.57"                     />
+    <arg name="dynamics_model"    value="$(arg dynamics_model)"    />
   </include>
 
   <include file="$(find multi_topology_demo)/launch/robot_setup.launch" ns="robot3" >
-    <arg name="namespace" value="robot3" />
+    <arg name="namespace"         value="robot3"                   />
+    <arg name="start_nodes_topic" value="$(arg start_nodes_topic)" />
+    <arg name="end_nodes_topic"   value="$(arg end_nodes_topic)"   />
+    <arg name="x_pos"             value="0.5"                      />
+    <arg name="y_pos"             value="3.0"                      />
+    <arg name="z_pos"             value="0.0"                      />
+    <arg name="yaw"               value="0.0"                      />
+    <arg name="dynamics_model"    value="$(arg dynamics_model)"    />
   </include>
 
   <include file="$(find multi_topology_demo)/launch/robot_setup.launch" ns="robot4" >
-    <arg name="namespace" value="robot4" />
+    <arg name="namespace"         value="robot4"                   />
+    <arg name="start_nodes_topic" value="$(arg start_nodes_topic)" />
+    <arg name="end_nodes_topic"   value="$(arg end_nodes_topic)"   />
+    <arg name="x_pos"             value="5.0"                      />
+    <arg name="y_pos"             value="-5.0"                     />
+    <arg name="z_pos"             value="0.0"                      />
+    <arg name="yaw"               value="0.0"                      />
+    <arg name="dynamics_model"    value="$(arg dynamics_model)"    />
   </include>
 
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(find turtlebot_launch)/rviz/Turtlebot_multi.rviz"/>

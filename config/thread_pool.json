@@ -1,156 +1,27 @@
-[
-  {
-    "name" : "desktop_nodes",
-    "nodes" :
-    [
-      {
-        "name"            : "rviz",
-        "package"         : "rviz",
-        "executable_name" : "rviz",
-        "launch_prefix"   : "",
-        "ns"              : "",
-        "args"            : "-d /home/james/main_ws/src/setup_and_launch/turtlebot_launch/rviz/Turtlebot_multi.rviz",
-        "parameters" :
-        [
-
-        ],
-        "remappings" :
-        [
-
-        ]
-      },
-      {
-        "name"            : "topology_graph",
-        "package"         : "go2goal",
-        "executable_name" : "topology_goal_generator",
-        "launch_prefix"   : "",
-        "ns"              : "",
-        "args"            : "",
-        "parameters" :
-        [
-
-        ],
-        "remappings" :
-        [
-
-        ]
-      }
-    ]
-  },
-  {
-    "name" : "robot_nodes",
-    "nodes" :
-    [
-      {
-        "name"            : "go_to_goal",
-        "package"         : "controllers",
-        "executable_name" : "simple_go_to_goal",
-        "launch_prefix"   : "",
-        "ns"              : "",
-        "args"            : "",
-        "parameters" :
-        [
+{
+  "resources" :
+  [
+    {
+      "name" : "robot_nodes",
+      "nodes" :
+      [
+        {
+          "name"            : "go_to_goal",
+          "package"         : "controllers",
+          "executable_name" : "simple_go_to_goal",
+          "parameters" :
           {
-            "name"  : "nominal_velocity",
-            "value" : 0.5
-          },
-          {
-            "name"  : "trans_vel_gain",
-            "value" : 0.5
-          },
-          {
-            "name"  : "rot_vel_gain",
-            "value" : 1.0
+            "nominal_velocity" : 0.5,
+            "trans_vel_gain"   : 0.5,
+            "rot_vel_gain"     : 1.0
           }
-        ],
-        "remappings" :
-        [
-
-        ]
-      },
-      {
-        "name"            : "robot_state_publisher",
-        "package"         : "robot_state_publisher",
-        "executable_name" : "robot_state_publisher",
-        "launch_prefix"   : "",
-        "ns"              : "",
-        "args"            : "",
-        "parameters" :
-        [
-          {
-            "name"  : "publish_frequency",
-            "value" : 50.0
-          }
-        ],
-        "remappings" :
-        [
-
-        ]
-      },
-      {
-        "name"            : "map_to_odom",
-        "package"         : "turtlebot_sim",
-        "executable_name" : "simple_map_tf",
-        "launch_prefix"   : "",
-        "ns"              : "",
-        "args"            : "",
-        "parameters" :
-        [
-          {
-            "name"  : "x_pos",
-            "value" : -7.0
-          },
-          {
-            "name"  : "y_pos",
-            "value" : -1.0
-          },
-          {
-            "name"  : "z_pos",
-            "value" : 0.0
-          },
-          {
-            "name"  : "yaw",
-            "value" : 1.57
-          }
-        ],
-        "remappings" :
-        [
-
-        ]
-      },
-      {
-        "name"            : "unicycle_node",
-        "package"         : "dynamic_models",
-        "executable_name" : "unicycle_dynamics",
-        "launch_prefix"   : "",
-        "ns"              : "",
-        "args"            : "",
-        "parameters" :
-        [
-
-        ],
-        "remappings" :
-        [
-
-        ]
-      },
-      {
-        "name"            : "turtlebot_vehicle",
-        "package"         : "turtlebot_sim",
-        "executable_name" : "turtlebot_vehicle",
-        "launch_prefix"   : "",
-        "ns"              : "",
-        "args"            : "",
-        "parameters" :
-        [
-
-        ],
-        "remappings" :
-        [
-
-        ]
-      }
-    ]
-  }
-]
-
+        },
+        {
+          "name"            : "unicycle_node",
+          "package"         : "dynamic_models",
+          "executable_name" : "unicycle_dynamics"
+        }
+      ]
+    }
+  ]
+}

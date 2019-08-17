@@ -1,13 +1,39 @@
 <!-- robot_setup.launch -->
 
 <launch>
-  <arg name="namespace" default="" />
+  <arg name="namespace"         default="" />
+  <arg name="start_nodes_topic" default="" />
+  <arg name="end_nodes_topic"   default="" />
+  <arg name="x_pos" default="-7.0"  />
+  <arg name="y_pos" default="-1.0"  />
+  <arg name="z_pos" default=" 0.0"  />
+  <arg name="yaw"   default=" 1.57" />
+  <arg name="dynamics_model" default="unicycle_dynamics"  />
 
-  <param name="odom_frame" value="$(arg namespace)/odom" />
+  <param name="odom_frame" value="$(arg namespace)/odom"           />
   <param name="base_frame" value="$(arg namespace)/base_footprint" />
 
   <include file="$(find turtlebot_launch)/launch/include/description.launch.xml" >
-    <arg name="model"           value="waffle_pi" />
+    <arg name="model"           value="waffle_pi"         />
     <arg name="robot_tf_prefix" value="$(arg namespace)/" />
   </include>
+
+  <include file="$(find node_server_core)/launch/ros_node_server.launch" >
+    <arg name="start_node_list_srv_topic" value="$(arg start_nodes_topic)" />
+    <arg name="kill_srv_topic"            value="$(arg end_nodes_topic)"   />
+  </include>
+
+  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen">
+    <param name="publish_frequency" type="double" value="50.0" />
+  </node>
+
+  <node pkg="turtlebot_sim" type="simple_map_tf" name="map_to_odom" output="screen">
+    <param name="x_pos" type="double" value="$(arg x_pos)" />
+    <param name="y_pos" type="double" value="$(arg y_pos)" />
+    <param name="z_pos" type="double" value="$(arg z_pos)" />
+    <param name="yaw"   type="double" value="$(arg yaw)"   />
+  </node>
+
+  <node pkg="dynamic_models" type="$(arg dynamics_model)" name="unicycle_node" output="screen" />
+
 </launch>

@@ -11,7 +11,7 @@
 #include"multi_topology_demo/multi_topology_behavior_manager.hpp"
 
 /* Behavior Manager Headers */
-#include<behavior_pool/behavior_pool.hpp>
+#include<behavior_manager/behavior_pool.hpp>
 
 /* ROS Headers */
 #include<ros/ros.h>
@@ -22,12 +22,41 @@ int main(int argc, char** argv)
   ros::NodeHandle m_nh;
   ros::NodeHandle p_nh("~");
 
-  std::string listening_topic;
+  std::string listening_topic,
+              status_topic,
+              get_resources_topic,
+              give_resources_topic,
+              give_up_resources_topic,
+              modify_robots_topic,
+              config_file_path;
 
-  p_nh.getParam("listening_topic", listening_topic);
+  if(!p_nh.getParam("listening_topic",         listening_topic)         ||
+     !p_nh.getParam("status_topic",            status_topic)            ||
+     !p_nh.getParam("get_resources_topic",     get_resources_topic)     ||
+     !p_nh.getParam("give_resources_topic",    give_resources_topic)    ||
+     !p_nh.getParam("give_up_resources_topic", give_up_resources_topic) ||
+     !p_nh.getParam("modify_robots_topic",     modify_robots_topic)     ||
+     !p_nh.getParam("config_file_path",        config_file_path))
+  {
+    throw std::runtime_error(std::string("Parameters aren't set right;") +
+                              "\nlistening_topic: "         + listening_topic +
+                              "\nstatus_topic: "            + status_topic +
+                              "\nget_resources_topic: "     + get_resources_topic +
+                              "\ngive_resources_topic: "    + give_resources_topic +
+                              "\ngive_up_resources_topic: " + give_up_resources_topic +
+                              "\nmodify_robots_topic: "     + modify_robots_topic +
+                              "\nconfig_file_path: "        + config_file_path);
+  }
 
-  BehaviorPool<MultiTopologyBehaviorManager> behavior(listening_topic, "Run_Topology", "http://localhost:8080/");
-
+  behavior_manager::BehaviorPool<MultiTopologyBehaviorManager> behavior("Run_Topology",
+                                                                        "http://localhost:8080/",
+                                                                        listening_topic,
+                                                                        status_topic,
+                                                                        get_resources_topic,
+                                                                        give_resources_topic,
+                                                                        give_up_resources_topic,
+                                                                        modify_robots_topic,
+                                                                        config_file_path);
   ros::Rate loop_rate(30);
 
   while(m_nh.ok())

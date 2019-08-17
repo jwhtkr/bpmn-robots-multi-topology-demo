@@ -7,7 +7,6 @@ find_package(catkin REQUIRED
   COMPONENTS
     roscpp
     behavior_manager
-    behavior_pool
 )
 
 ###################################
@@ -20,7 +19,6 @@ catkin_package(
   CATKIN_DEPENDS
     roscpp
     behavior_manager
-    behavior_pool
 )
 
 ###########

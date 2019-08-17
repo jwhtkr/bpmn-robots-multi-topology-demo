@@ -13,6 +13,9 @@
 /* Behavior Manager Headers */
 #include<behavior_manager/behavior_manager.hpp>
 
+/* Architecture Messages */
+#include<architecture_msgs/BehaviorStatus.h>
+
 /* ROS Headers */
 #include<ros/ros.h>
 
@@ -22,16 +25,36 @@
 
 MultiTopologyBehaviorManager::MultiTopologyBehaviorManager(const std::string& base_uri,
                                                            const std::string& name,
-                                                           const std::string& topic)
- : BehaviorManager<>(base_uri, name, topic, std::vector<std::string>({"timeout_period"})),
+                                                           const std::string& camunda_topic,
+                                                           const std::string& status_topic,
+                                                           const std::string& get_resources_topic,
+                                                           const std::string& give_resources_topic,
+                                                           const std::string& give_up_resources_topic,
+                                                           const std::string& modify_robots_topic,
+                                                           const std::string& config_file_path)
+ : behavior_manager::BehaviorManager<>(base_uri,
+                                       name,
+                                       camunda_topic,
+                                       status_topic,
+                                       get_resources_topic,
+                                       give_resources_topic,
+                                       give_up_resources_topic,
+                                       modify_robots_topic,
+                                       config_file_path,
+                                       std::vector<std::string>({"timeout_period"})),
    start_time(0),
    period(0)
 {}
 
-uint8_t MultiTopologyBehaviorManager::getBehaviorPriority() const noexcept
+architecture_msgs::BehaviorStatus::Response::Ptr MultiTopologyBehaviorManager::getStatus() const noexcept
 {
-  return BehaviorManager::getBehaviorPriority();
+  architecture_msgs::BehaviorStatus::Response::Ptr output(this->::behavior_manager::BehaviorManager<>::getStatus());
+
+  output->description = "This behavior is used to make simulated turtlebots go to random goals.";
+
+  return output;
 }
+
 
 void MultiTopologyBehaviorManager::runBehavior()
 {
