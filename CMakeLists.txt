@@ -9,6 +9,8 @@ find_package(catkin REQUIRED
     behavior_manager
 )
 
+find_package(cpprestsdk REQUIRED COMPONENTS cpprest)
+
 ###################################
 ## catkin specific configuration ##
 ###################################
@@ -19,6 +21,8 @@ catkin_package(
   CATKIN_DEPENDS
     roscpp
     behavior_manager
+  DEPENDS
+    cpprestsdk
 )
 
 ###########
@@ -37,6 +41,7 @@ add_executable(${PROJECT_NAME}_behavior_manager_node
 set_target_properties(${PROJECT_NAME}_behavior_manager_node PROPERTIES OUTPUT_NAME ${PROJECT_NAME}_behavior_manager_node PREFIX "")
 add_dependencies(${PROJECT_NAME}_behavior_manager_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(${PROJECT_NAME}_behavior_manager_node
+  cpprestsdk::cpprest
   ${catkin_LIBRARIES}
 )
 
