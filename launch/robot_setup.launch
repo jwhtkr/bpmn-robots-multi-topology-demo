@@ -4,11 +4,12 @@
   <arg name="namespace"         default="" />
   <arg name="start_nodes_topic" default="" />
   <arg name="end_nodes_topic"   default="" />
-  <arg name="x_pos" default="-7.0"  />
-  <arg name="y_pos" default="-1.0"  />
-  <arg name="z_pos" default=" 0.0"  />
-  <arg name="yaw"   default=" 1.57" />
-  <arg name="dynamics_model" default="unicycle_dynamics"  />
+  <arg name="x_pos" default="0.0" />
+  <arg name="y_pos" default="0.0" />
+  <arg name="yaw"   default="0.0" />
+
+  <arg name="address" default="" />
+  <arg name="env-loader" default="" />
 
   <param name="odom_frame" value="$(arg namespace)/odom"           />
   <param name="base_frame" value="$(arg namespace)/base_footprint" />
@@ -17,6 +18,8 @@
     <arg name="model"           value="waffle_pi"         />
     <arg name="robot_tf_prefix" value="$(arg namespace)/" />
   </include>
+
+  <machine name="$(arg namespace)" address="$(arg address)" env-loader="$(arg env-loader)" />
 
   <include file="$(find node_server_core)/launch/ros_node_server.launch" >
     <arg name="start_node_list_srv_topic" value="$(arg start_nodes_topic)" />
@@ -27,13 +30,50 @@
     <param name="publish_frequency" type="double" value="50.0" />
   </node>
 
-  <node pkg="turtlebot_sim" type="simple_map_tf" name="map_to_odom" output="screen">
-    <param name="x_pos" type="double" value="$(arg x_pos)" />
-    <param name="y_pos" type="double" value="$(arg y_pos)" />
-    <param name="z_pos" type="double" value="$(arg z_pos)" />
-    <param name="yaw"   type="double" value="$(arg yaw)"   />
+  <node pkg="robot_localization" type="ekf_localization_node" name="odom_filter" output="screen" >
+    <rosparam sub_val="true">
+      frequency: 30
+      sensor_timeout: 1
+      two_d_mode: true
+      <!-- Add frames if needed -->
+      <!-- From Mocap -->
+      pose0: pose
+      pose0_config:
+        [true,  true,  true,
+         true,  true,  true,
+         false, false, false,
+         false, false, false,
+         false, false, false]
+      pose0_queue_size: 50
+      pose0_differential: true
+      initial_state:
+        [$(arg x_pos), $(arg y_pos), 0.0,
+         0.0,          0.0,          $(arg yaw),
+         0.0,          0.0,          0.0,
+         0.0,          0.0,          0.0,
+         0.0,          0.0,          0.0]
+      publish_tf: true
+      print_diagnostics: false
+      use_control: true
+      stamped_control: true
+      control_timeout: 1
+      control_config:
+        [true, true, true,
+         true, true, true]
+      smooth_lagged_data: true
+      history_length: 5
+      dynamic_process_noise_covariance: true
+    </rosparam>
+    <remap from="odometry/filtered" to="odom" />
   </node>
 
-  <node pkg="dynamic_models" type="$(arg dynamics_model)" name="unicycle_node" output="screen" />
+  <node pkg="rosserial_python" type="serial_node.py" name="turtlebot3_core" output="screen" machine="$(arg namespace)">
+    <param name="port" value="/dev/ttyACM0"/>
+    <param name="baud" value="115200"/>
+    <param name="tf_prefix" value="$(arg namespace)"/>
+    <remap from="/$(arg namespace)/cmd_vel" to="/cmd_vel"/>
+  </node>
+
+  <node pkg="turtlebot3_bringup" type="turtlebot3_diagnostics" name="diagnostics" output="screen" machine="$(arg namespace)"/>
 
 </launch>

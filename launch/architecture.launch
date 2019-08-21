@@ -1,0 +1,39 @@
+<!-- architecture.launch -->
+
+<launch>
+  <arg name="listener_output"     default="listener_output"    />
+  <arg name="resource_ask"        default="resource_ask"       />
+  <arg name="resource_take"       default="resource_take"      />
+  <arg name="resource_return"     default="resource_return"    />
+  <arg name="modify_robots_topic" default="modify_robots_topic" />
+  <arg name="start_nodes_topic"   default="start_nodes_topic"  />
+  <arg name="end_nodes_topic"     default="end_nodes_topic"    />
+
+  <include file="$(find resource_manager_emulator)/launch/resource_manager_emulator.launch" >
+    <arg name="request_topic"          value="$(arg resource_ask)"     />
+    <arg name="get_resources_topic"    value="$(arg resource_take)"    />
+    <arg name="return_resources_topic" value="$(arg resource_return)" />
+  </include>
+
+  <node name="behavior_listener" pkg="behavior_listener" type="behavior_listener_node.py" output="screen" >
+    <remap from="behaviors" to="$(arg listener_output)" />
+  </node>
+
+  <node name="multi_topology_behavior_manager" pkg="multi_topology_demo" type="multi_topology_demo_behavior_manager_node" output="screen" launch-prefix="" >
+    <param name="listening_topic"         value="$(arg listener_output)"     />
+    <param name="status_topic"            value="status_topic"               />
+    <param name="get_resources_topic"     value="$(arg resource_ask)"        />
+    <param name="give_resources_topic"    value="$(arg resource_return)"     />
+    <param name="give_up_resources_topic" value="$(arg resource_take)"       />
+    <param name="modify_robots_topic"     value="$(arg modify_robots_topic)" />
+    <param name="config_file_path"        value="$(find multi_topology_demo)/config/multi_topology_manager.json" />
+  </node>
+
+  <include file="$(find thread_pool)/launch/thread_pool.launch" >
+    <arg name="service_provided_topic"      value="$(arg modify_robots_topic)" />
+    <arg name="ros_node_server_start_topic" value="$(arg start_nodes_topic)"   />
+    <arg name="ros_node_server_kill_topic"  value="$(arg end_nodes_topic)"     />
+    <arg name="config_file"                 value="$(find multi_topology_demo)/config/thread_pool.json" />
+  </include>
+
+</launch>

@@ -19,7 +19,7 @@
 - git: {local-name: multi_topology/high_level_control,
         uri: 'git@gitlab.com:droge-robotics/high_level_control.git',
         version: proj3}
-        
+
 - git: {local-name: multi_topology/network_topology_emulator,
         uri: 'git@gitlab.com:droge-robotics/network-topolology-emulator.git',
         version: rebroadcasters}
@@ -65,18 +65,13 @@
 
 - git: {local-name: architecture/bpmn_interface,
         uri: 'git@gitlab.com:droge-robotics/camunda/bpmn_interface.git',
-        version: master}
+        version: james-dev}
 
 - git: {local-name: architecture/camunda_c_api,
         uri: 'git@gitlab.com:droge-robotics/camunda/camunda_c_api.git',
-        version: master}
+        version: james-dev}
 
 - git: {local-name: architecture/architecture_msgs,
         uri: 'git@gitlab.com:droge-robotics/camunda/architecture_msgs.git',
         version: james-dev}
-
-## Camunda
-- git: {local-name: ../our_camunda,
-        uri: 'git@gitlab.com:droge-robotics/camunda/our_camunda.git',
-        version: master}
 
