@@ -1,5 +1,4 @@
 {
-  "priority" : 42,
   "roles" :
   [
     {
@@ -32,17 +31,6 @@
         },
         {
           "name"     : "robot3",
-          "category" : "",
-          "type"     : "",
-          "required" : true,
-          "priority" : 10,
-          "nodes" :
-          [
-            "robot_nodes"
-          ]
-        },
-        {
-          "name"     : "robot4",
           "category" : "",
           "type"     : "",
           "required" : true,

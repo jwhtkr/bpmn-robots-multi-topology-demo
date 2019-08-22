@@ -14,20 +14,6 @@
             "nominal_velocity" : 0.5,
             "trans_vel_gain"   : 0.5,
             "rot_vel_gain"     : 1.0
-          },
-          "remap" :
-          {
-            "cmd_vel" : "cmd_vel_raw"
-          }
-        },
-        {
-          "name"            : "unicycle_node",
-          "package"         : "dynamic_models",
-          "executable_name" : "unicycle_dynamics",
-          "remap" :
-          {
-            "cmd_vel" : "cmd_vel_raw",
-            "odom"    : "cmd_vel"
           }
         }
       ]

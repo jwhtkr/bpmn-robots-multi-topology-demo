@@ -1,14 +1,11 @@
 <!-- real.launch -->
 
 <launch>
-  <arg name="start_nodes_topic" default="start_nodes_topic" />
-  <arg name="end_nodes_topic"   default="end_nodes_topic"   />
-
-  <arg name="mocab_address" default="192.168.1.109" />
+  <arg name="mocab_address" default="" />
   <arg name="robot1_tag"    default="turtlebot1" />
   <arg name="robot2_tag"    default="turtlebot2" />
   <arg name="robot3_tag"    default="turtlebot0" />
-<!--  <arg name="robot4_tag"    default="wafflebit0" /> -->
+  <arg name="robot4_tag"    default="wafflebit0" />
 
   <include file="$(find multi_topology_demo)/launch/architecture.launch" />
 
@@ -22,6 +19,7 @@
         - $(arg robot1_tag)
         - $(arg robot2_tag)
         - $(arg robot3_tag)
+        - $(arg robot4_tag)
     </rosparam>
   </node>
 
@@ -33,7 +31,6 @@
     <arg name="y_pos"             value="0.0"                      />
     <arg name="yaw"               value="1.0"                      />
     <arg name="address"           value="$(arg robot1_tag)"        />
-    <arg name="user"              value="grant"                    />
   </include>
 
   <include file="$(find multi_topology_demo)/launch/robot_setup.launch" ns="$(arg robot2_tag)" >
@@ -44,7 +41,6 @@
     <arg name="y_pos"             value="1.0"                      />
     <arg name="yaw"               value="1.5"                      />
     <arg name="address"           value="$(arg robot2_tag)"        />
-    <arg name="user"              value="luke"                     />
   </include>
 
   <include file="$(find multi_topology_demo)/launch/robot_setup.launch" ns="$(arg robot3_tag)" >
@@ -55,19 +51,18 @@
     <arg name="y_pos"             value="0.0"                      />
     <arg name="yaw"               value="0.0"                      />
     <arg name="address"           value="$(arg robot3_tag)"        />
-    <arg name="user"              value="noah"                     />
   </include>
 
-<!--  <include file="$(find multi_topology_demo)/launch/robot_setup.launch" ns="$(arg robot4_tag)" > -->
-<!--   <arg name="namespace"         value="$(arg robot4_tag)"        /> -->
-<!--   <arg name="start_nodes_topic" value="$(arg start_nodes_topic)" /> --> 
-<!--   <arg name="end_nodes_topic"   value="$(arg end_nodes_topic)"   /> -->
-<!--   <arg name="x_pos"             value="0.0"                      /> -->
-<!--   <arg name="y_pos"             value="-1.0"                     /> --> 
-<!--   <arg name="yaw"               value="0.5"                      /> -->
-<!--   <arg name="dynamics_model"    value="$(arg dynamics_model)"    /> -->
-<!--   <arg name="address"           value="$(arg robot4_tag)"        /> --> 
-<!--  </include> -->
+  <include file="$(find multi_topology_demo)/launch/robot_setup.launch" ns="$(arg robot4_tag)" >
+    <arg name="namespace"         value="$(arg robot4_tag)"        />
+    <arg name="start_nodes_topic" value="$(arg start_nodes_topic)" />
+    <arg name="end_nodes_topic"   value="$(arg end_nodes_topic)"   />
+    <arg name="x_pos"             value="0.0"                      />
+    <arg name="y_pos"             value="-1.0"                     />
+    <arg name="yaw"               value="0.5"                      />
+    <arg name="dynamics_model"    value="$(arg dynamics_model)"    />
+    <arg name="address"           value="$(arg robot4_tag)"        />
+  </include>
 
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(find turtlebot_launch)/rviz/Turtlebot_multi.rviz"/>
 
