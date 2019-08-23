@@ -20,19 +20,26 @@
     <arg name="robot_tf_prefix" value="$(arg namespace)/" />
   </include>
 
-  <machine name="$(arg namespace)" address="$(arg address)" user="$(arg user)" env-loader="$(arg env-loader)" />
+  <machine name="$(arg namespace)" address="$(arg address)" user="$(arg user)" env-loader="$(arg env-loader)" password="turtlebot" />
 
   <include file="$(find node_server_core)/launch/ros_node_server.launch" >
     <arg name="start_node_list_srv_topic" value="$(arg start_nodes_topic)" />
     <arg name="kill_srv_topic"            value="$(arg end_nodes_topic)"   />
   </include>
 
+  <node pkg="turtlebot_sim" type="simple_map_tf" name="map_to_odom" output="screen">
+    <param name="x_pos" type="double" value="$(arg x_pos)" />
+    <param name="y_pos" type="double" value="$(arg y_pos)" />
+    <param name="z_pos" type="double" value="0" />
+    <param name="yaw"   type="double" value="$(arg yaw)"   />
+  </node>
+
   <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen">
     <param name="publish_frequency" type="double" value="50.0" />
   </node>
 
   <node pkg="robot_localization" type="ekf_localization_node" name="odom_filter" output="screen" >
-    <rosparam sub_val="true">
+    <rosparam subst_value="true">
       frequency: 30
       sensor_timeout: 1
       two_d_mode: true

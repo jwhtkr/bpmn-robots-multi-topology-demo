@@ -23,10 +23,13 @@
         - $(arg robot2_tag)
         - $(arg robot3_tag)
     </rosparam>
+    <remap from="vrpn_client_node/turtlebot0/pose" to="robot1/pose" />
+    <remap from="vrpn_client_node/turtlebot1/pose" to="robot2/pose" />
+    <remap from="vrpn_client_node/turtlebot2/pose" to="robot3/pose" />
   </node>
 
-  <include file="$(find multi_topology_demo)/launch/robot_setup.launch" ns="$(arg robot1_tag)" >
-    <arg name="namespace"         value="$(arg robot1_tag)"        />
+  <include file="$(find multi_topology_demo)/launch/robot_setup.launch" ns="robot1" >
+    <arg name="namespace"         value="robot1"        />
     <arg name="start_nodes_topic" value="$(arg start_nodes_topic)" />
     <arg name="end_nodes_topic"   value="$(arg end_nodes_topic)"   />
     <arg name="x_pos"             value="1.0"                      />
@@ -36,8 +39,8 @@
     <arg name="user"              value="grant"                    />
   </include>
 
-  <include file="$(find multi_topology_demo)/launch/robot_setup.launch" ns="$(arg robot2_tag)" >
-    <arg name="namespace"         value="$(arg robot2_tag)"        />
+  <include file="$(find multi_topology_demo)/launch/robot_setup.launch" ns="robot2" >
+    <arg name="namespace"         value="robot2"        />
     <arg name="start_nodes_topic" value="$(arg start_nodes_topic)" />
     <arg name="end_nodes_topic"   value="$(arg end_nodes_topic)"   />
     <arg name="x_pos"             value="0.0"                      />
@@ -47,8 +50,8 @@
     <arg name="user"              value="luke"                     />
   </include>
 
-  <include file="$(find multi_topology_demo)/launch/robot_setup.launch" ns="$(arg robot3_tag)" >
-    <arg name="namespace"         value="$(arg robot3_tag)"        />
+  <include file="$(find multi_topology_demo)/launch/robot_setup.launch" ns="robot3" >
+    <arg name="namespace"         value="robot3"        />
     <arg name="start_nodes_topic" value="$(arg start_nodes_topic)" />
     <arg name="end_nodes_topic"   value="$(arg end_nodes_topic)"   />
     <arg name="x_pos"             value="-1.0"                     />
