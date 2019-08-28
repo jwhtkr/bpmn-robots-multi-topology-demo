@@ -37,6 +37,10 @@
         uri: 'https://github.com/ROBOTIS-GIT/turtlebot3.git',
         version: master}
 
+- git: {local-name: multi_topology/mocap_interface,
+        uri: 'git@gitlab.com:droge-robotics/general_research_code/mocap_interface.git',
+        version: master}
+
 ## Architecture Repos
 - git: {local-name: architecture/architecture_emulator,
         uri: 'git@gitlab.com:droge-robotics/camunda/architecture_emulator.git',

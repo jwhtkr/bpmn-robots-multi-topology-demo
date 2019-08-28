@@ -38,42 +38,11 @@
     <param name="publish_frequency" type="double" value="50.0" />
   </node>
 
-  <node pkg="robot_localization" type="ekf_localization_node" name="odom_filter" output="screen" >
-    <rosparam subst_value="true">
-      frequency: 30
-      sensor_timeout: 1
-      two_d_mode: true
-      <!-- Add frames if needed -->
-      <!-- From Mocap -->
-      pose0: pose
-      pose0_config:
-        [true,  true,  true,
-         true,  true,  true,
-         false, false, false,
-         false, false, false,
-         false, false, false]
-      pose0_queue_size: 50
-      pose0_differential: true
-      initial_state:
-        [$(arg x_pos), $(arg y_pos), 0.0,
-         0.0,          0.0,          $(arg yaw),
-         0.0,          0.0,          0.0,
-         0.0,          0.0,          0.0,
-         0.0,          0.0,          0.0]
-      publish_tf: true
-      print_diagnostics: false
-      use_control: true
-      stamped_control: true
-      control_timeout: 1
-      control_config:
-        [true, true, true,
-         true, true, true]
-      smooth_lagged_data: true
-      history_length: 5
-      dynamic_process_noise_covariance: true
-    </rosparam>
-    <remap from="odometry/filtered" to="odom" />
-  </node>
+  <launch file="$(find mocap_interface)/launch/turtlebot_setup.launch" >
+    <arg name="x_init_pos" value="$(arg x_pos)" />
+    <arg name="y_init_pos" value="$(arg y_pos)" />
+    <arg name="yaw_init"   value="$(arg yaw)" />
+  </launch>
 
   <node pkg="rosserial_python" type="serial_node.py" name="turtlebot3_core" output="screen" machine="$(arg namespace)">
     <param name="port" value="/dev/ttyACM0"/>
