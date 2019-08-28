@@ -34,21 +34,20 @@
     <param name="yaw"   type="double" value="$(arg yaw)"   />
   </node>
 
-  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen">
+  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen" >
     <param name="publish_frequency" type="double" value="50.0" />
   </node>
 
-  <launch file="$(find mocap_interface)/launch/turtlebot_setup.launch" >
+  <include file="$(find mocap_interface)/launch/turtlebot_setup.launch" >
     <arg name="x_init_pos" value="$(arg x_pos)" />
     <arg name="y_init_pos" value="$(arg y_pos)" />
     <arg name="yaw_init"   value="$(arg yaw)" />
-  </launch>
+  </include>
 
   <node pkg="rosserial_python" type="serial_node.py" name="turtlebot3_core" output="screen" machine="$(arg namespace)">
     <param name="port" value="/dev/ttyACM0"/>
     <param name="baud" value="115200"/>
     <param name="tf_prefix" value="$(arg namespace)"/>
-    <remap from="/$(arg namespace)/cmd_vel" to="/cmd_vel"/>
   </node>
 
   <node pkg="turtlebot3_bringup" type="turtlebot3_diagnostics" name="diagnostics" output="screen" machine="$(arg namespace)"/>
