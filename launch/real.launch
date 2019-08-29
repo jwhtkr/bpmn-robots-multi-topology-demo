@@ -8,7 +8,7 @@
   <arg name="robot1_tag"    default="turtlebot1" />
   <arg name="robot2_tag"    default="turtlebot2" />
   <arg name="robot3_tag"    default="turtlebot0" />
-<!--  <arg name="robot4_tag"    default="wafflebit0" /> -->
+  <arg name="robot4_tag"    default="wafflebot0" />
 
   <include file="$(find multi_topology_demo)/launch/architecture.launch" />
 
@@ -20,8 +20,6 @@
       update_frequency: 100
       trackers:
         - $(arg robot1_tag)
-        - $(arg robot2_tag)
-        - $(arg robot3_tag)
     </rosparam>
     <remap from="vrpn_client_node/turtlebot0/pose" to="robot1/pose" />
     <remap from="vrpn_client_node/turtlebot1/pose" to="robot2/pose" />
@@ -32,9 +30,6 @@
     <arg name="namespace"         value="robot1"        />
     <arg name="start_nodes_topic" value="$(arg start_nodes_topic)" />
     <arg name="end_nodes_topic"   value="$(arg end_nodes_topic)"   />
-    <arg name="x_pos"             value="0.0"                      />
-    <arg name="y_pos"             value="0.0"                      />
-    <arg name="yaw"               value="0.0"                      />
     <arg name="address"           value="$(arg robot1_tag)"        />
     <arg name="user"              value="grant"                    />
   </include>
@@ -43,9 +38,6 @@
     <arg name="namespace"         value="robot2"        />
     <arg name="start_nodes_topic" value="$(arg start_nodes_topic)" />
     <arg name="end_nodes_topic"   value="$(arg end_nodes_topic)"   />
-    <arg name="x_pos"             value="0.0"                      />
-    <arg name="y_pos"             value="1.0"                      />
-    <arg name="yaw"               value="1.5"                      />
     <arg name="address"           value="$(arg robot2_tag)"        />
     <arg name="user"              value="luke"                     />
   </include>
@@ -54,25 +46,29 @@
     <arg name="namespace"         value="robot3"        />
     <arg name="start_nodes_topic" value="$(arg start_nodes_topic)" />
     <arg name="end_nodes_topic"   value="$(arg end_nodes_topic)"   />
-    <arg name="x_pos"             value="-1.0"                     />
-    <arg name="y_pos"             value="0.0"                      />
-    <arg name="yaw"               value="0.0"                      />
     <arg name="address"           value="$(arg robot3_tag)"        />
     <arg name="user"              value="noah"                     />
   </include>
 
-<!--  <include file="$(find multi_topology_demo)/launch/robot_setup.launch" ns="$(arg robot4_tag)" > -->
-<!--   <arg name="namespace"         value="$(arg robot4_tag)"        /> -->
-<!--   <arg name="start_nodes_topic" value="$(arg start_nodes_topic)" /> -->
-<!--   <arg name="end_nodes_topic"   value="$(arg end_nodes_topic)"   /> -->
-<!--   <arg name="x_pos"             value="0.0"                      /> -->
-<!--   <arg name="y_pos"             value="-1.0"                     /> -->
-<!--   <arg name="yaw"               value="0.5"                      /> -->
-<!--   <arg name="dynamics_model"    value="$(arg dynamics_model)"    /> -->
-<!--   <arg name="address"           value="$(arg robot4_tag)"        /> -->
-<!--  </include> -->
+  <include file="$(find multi_topology_demo)/launch/robot_setup.launch" ns="$robot4" if="false" >
+   <arg name="namespace"         value="robot4"        />
+   <arg name="start_nodes_topic" value="$(arg start_nodes_topic)" />
+   <arg name="end_nodes_topic"   value="$(arg end_nodes_topic)"   />
+   <arg name="dynamics_model"    value="$(arg dynamics_model)"    />
+   <arg name="address"           value="$(arg robot4_tag)"        />
+  </include>
 
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(find turtlebot_launch)/rviz/Turtlebot_multi.rviz"/>
 
+  <include file="$(find gazebo_ros)/launch/empty_world.launch" >
+    <arg name="world_name" value="$(find turtlebot3_gazebo)/worlds/turtlebot3_house.world"/>
+    <arg name="paused" value="false"/>
+    <arg name="use_sim_time" value="false" />
+    <arg name="gui" value="true"/>
+    <arg name="headless" value="false"/>
+    <arg name="debug" value="false"/>
+  </include>
+
   <node name="topology_graph" pkg="go2goal" type="topology_goal_generator" output="screen" />
+
 </launch>
