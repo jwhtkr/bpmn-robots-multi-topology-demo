@@ -26,6 +26,18 @@
 
   <include file="$(find mocap_interface)/launch/turtlebot_setup.launch" />
 
+  <node pkg="turtlebot_sim" type="simple_map_tf" name="map_to_odom" output="screen">
+    <param name="x_pos" type="double" value="0" />
+    <param name="y_pos" type="double" value="0" />
+    <param name="z_pos" type="double" value="0" />
+    <param name="yaw"   type="double" value="0"   />
+  </node>
+
+  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen" >
+    <param name="publish_frequency" type="double" value="50.0" />
+    <remap from="joint_states" to="base_link" />
+  </node>
+
   <node pkg="rosserial_python" type="serial_node.py" name="turtlebot3_core" output="screen" machine="$(arg namespace)">
     <param name="port" value="/dev/ttyACM0"/>
     <param name="baud" value="115200"/>

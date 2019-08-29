@@ -17,28 +17,6 @@
           [
             "robot_nodes"
           ]
-        },
-        {
-          "name"     : "robot2",
-          "category" : "",
-          "type"     : "",
-          "required" : true,
-          "priority" : 10,
-          "nodes" :
-          [
-            "robot_nodes"
-          ]
-        },
-        {
-          "name"     : "robot3",
-          "category" : "",
-          "type"     : "",
-          "required" : true,
-          "priority" : 10,
-          "nodes" :
-          [
-            "robot_nodes"
-          ]
         }
       ]
     }
