@@ -21,13 +21,11 @@
 
   <include file="$(find multi_topology_demo)/launch/robot_setup.launch" ns="robot1" >
     <arg name="namespace"         value="robot1"        />
-    <arg name="start_nodes_topic" value="$(arg start_nodes_topic)" />
-    <arg name="end_nodes_topic"   value="$(arg end_nodes_topic)"   />
     <arg name="address"           value="$(arg robot1_tag)"        />
     <arg name="user"              value="grant"                    />
   </include>
 
-  <node name="go_to_goal" pkg="controllers" type="simple_go_to_goal" output="screen" ns="robot1" />
+  <node name="go_to_goal" pkg="controllers" type="simple_go_to_goal" output="screen" ns="robot1" >
     <param name="nominal_velocity" value="0.5" />
     <param name="trans_vel_gain"   value="0.5" />
     <param name="rot_vel_gain"     value="1.0" />
@@ -35,24 +33,18 @@
 
   <include file="$(find multi_topology_demo)/launch/robot_setup.launch" ns="robot2" if="false" >
     <arg name="namespace"         value="robot2"        />
-    <arg name="start_nodes_topic" value="$(arg start_nodes_topic)" />
-    <arg name="end_nodes_topic"   value="$(arg end_nodes_topic)"   />
     <arg name="address"           value="$(arg robot2_tag)"        />
     <arg name="user"              value="luke"                     />
   </include>
 
   <include file="$(find multi_topology_demo)/launch/robot_setup.launch" ns="robot3" if="false" >
     <arg name="namespace"         value="robot3"        />
-    <arg name="start_nodes_topic" value="$(arg start_nodes_topic)" />
-    <arg name="end_nodes_topic"   value="$(arg end_nodes_topic)"   />
     <arg name="address"           value="$(arg robot3_tag)"        />
     <arg name="user"              value="noah"                     />
   </include>
 
   <include file="$(find multi_topology_demo)/launch/robot_setup.launch" ns="$robot4" if="false" >
    <arg name="namespace"         value="robot4"        />
-   <arg name="start_nodes_topic" value="$(arg start_nodes_topic)" />
-   <arg name="end_nodes_topic"   value="$(arg end_nodes_topic)"   />
    <arg name="dynamics_model"    value="$(arg dynamics_model)"    />
    <arg name="address"           value="$(arg robot4_tag)"        />
   </include>
