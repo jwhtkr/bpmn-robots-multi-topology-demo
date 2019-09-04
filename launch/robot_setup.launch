@@ -23,7 +23,6 @@
 
   <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen" >
     <param name="publish_frequency" type="double" value="50.0" />
-    <remap from="joint_states" to="base_link" />
   </node>
 
   <node pkg="rosserial_python" type="serial_node.py" name="turtlebot3_core" output="screen" machine="$(arg namespace)">
