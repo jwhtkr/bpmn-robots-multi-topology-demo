@@ -17,7 +17,7 @@
 
   <machine name="$(arg namespace)" address="$(arg address)" user="$(arg user)" env-loader="$(arg env-loader)" password="turtlebot" />
 
-  <include file="$(find mocap_interface)/launch/turtlebot_setup.launch" />
+  <include file="$(find mocap_interface)/launch/odom_generator.launch" />
 
   <node pkg="mocap_interface" type="mocap_to_map_tf_node" name="map_to_odom" output="screen" />
 
