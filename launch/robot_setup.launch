@@ -8,7 +8,6 @@
   <arg name="user"       default="" />
 
   <param name="odom_frame" value="$(arg namespace)/odom"           />
-  <param name="base_frame" value="$(arg namespace)/base_footprint" />
 
   <include file="$(find turtlebot_launch)/launch/include/description.launch.xml" >
     <arg name="model"           value="waffle_pi"         />
@@ -20,7 +19,6 @@
   <include file="$(find mocap_interface)/launch/odom_generator.launch" />
 
   <include file="$(find mocap_interface)/launch/mocap_to_map_tf.launch" >
-    <arg name="robot_odom_topic" value="odom" />
     <arg name="map_frame"        value="map"                   />
     <arg name="odom_frame"       value="$(arg namespace)/odom" />
   </include>
@@ -29,7 +27,7 @@
     <param name="publish_frequency" type="double" value="50.0" />
   </node>
 
-  <node pkg="rosserial_python" type="serial_node.py" name="turtlebot3_core" output="screen" machine="$(arg namespace)" if="true" >
+  <node pkg="rosserial_python" type="serial_node.py" name="turtlebot3_core" output="screen" machine="$(arg namespace)" >
     <param name="port"      value="/dev/ttyACM0"/>
     <param name="baud"      value="115200"/>
     <param name="tf_prefix" value="$(arg namespace)"/>
