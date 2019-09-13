@@ -7,7 +7,7 @@
   <arg name="env-loader" default="~/catkin_ws/env.sh" />
   <arg name="user"       default="" />
 
-  <param name="odom_frame" value="$(arg namespace)/odom"           />
+  <param name="odom_frame" value="$(arg namespace)/good_odom" />
 
   <include file="$(find turtlebot_launch)/launch/include/description.launch.xml" >
     <arg name="model"           value="waffle_pi"         />
@@ -16,11 +16,17 @@
 
   <machine name="$(arg namespace)" address="$(arg address)" user="$(arg user)" env-loader="$(arg env-loader)" password="turtlebot" />
 
-  <include file="$(find mocap_interface)/launch/odom_generator.launch" />
+  <include file="$(find mocap_interface)/launch/odom_generator.launch" >
+    <arg name="twist_topic" value="cmd_vel"                    />
+    <arg name="pose_topic"  value="pose"                       />
+    <arg name="odom_topic"  value="good_odom"                  />
+    <arg name="odom_frame"  value="$(arg namespace)/good_odom" />
+    <arg name="map_frame"   value="map"                        />
+  </include>
 
   <include file="$(find mocap_interface)/launch/mocap_to_map_tf.launch" >
     <arg name="map_frame"        value="map"                   />
-    <arg name="odom_frame"       value="$(arg namespace)/odom" />
+    <arg name="odom_frame"       value="$(arg namespace)/good_odom" />
   </include>
 
   <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen" >
@@ -31,7 +37,7 @@
     <param name="port"      value="/dev/ttyACM0"/>
     <param name="baud"      value="115200"/>
     <param name="tf_prefix" value="$(arg namespace)"/>
-    <remap from="odom" to="odom_raw" />   
+    <remap from="odom" to="odom_raw" />
   </node>
 
   <node pkg="turtlebot3_bringup" type="turtlebot3_diagnostics" name="diagnostics" output="screen" machine="$(arg namespace)"/>
