@@ -3,7 +3,7 @@
 <launch>
   <arg name="mocab_address" default="192.168.1.109" />
   <arg name="robot1_tag"    default="turtlebot1" />
-  <arg name="robot2_tag"    default="turtlebot2" />
+  <arg name="robot2_tag"    default="turtlebot0" />
   <arg name="robot3_tag"    default="turtlebot0" />
   <arg name="robot4_tag"    default="wafflebot0" />
 
@@ -31,11 +31,17 @@
     <param name="rot_vel_gain"     value="1.0" />
   </node>
 
-  <include file="$(find multi_topology_demo)/launch/robot_setup.launch" ns="robot2" if="false" >
+  <include file="$(find multi_topology_demo)/launch/robot_setup.launch" ns="robot2" >
     <arg name="namespace"         value="robot2"        />
     <arg name="address"           value="$(arg robot2_tag)"        />
-    <arg name="user"              value="luke"                     />
+    <arg name="user"              value="noah"                     />
   </include>
+
+  <node name="go_to_goal" pkg="controllers" type="simple_go_to_goal" output="screen" ns="robot2" >
+    <param name="nominal_velocity" value="0.5" />
+    <param name="trans_vel_gain"   value="0.5" />
+    <param name="rot_vel_gain"     value="1.0" />
+  </node>
 
   <include file="$(find multi_topology_demo)/launch/robot_setup.launch" ns="robot3" if="false" >
     <arg name="namespace"         value="robot3"        />
