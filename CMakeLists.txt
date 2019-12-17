@@ -6,7 +6,7 @@ add_compile_options(-std=c++11 -g -O0)
 find_package(catkin REQUIRED
   COMPONENTS
     roscpp
-    behavior_manager
+#    behavior_manager
 )
 
 find_package(cpprestsdk REQUIRED COMPONENTS cpprest)
@@ -20,7 +20,7 @@ catkin_package(
     include
   CATKIN_DEPENDS
     roscpp
-    behavior_manager
+#    behavior_manager
   DEPENDS
     cpprestsdk
 )
@@ -34,16 +34,16 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
-add_executable(${PROJECT_NAME}_behavior_manager_node
-  src/multi_topology_behavior_manager_node.cpp
-  src/multi_topology_behavior_manager.cpp
-)
-set_target_properties(${PROJECT_NAME}_behavior_manager_node PROPERTIES OUTPUT_NAME ${PROJECT_NAME}_behavior_manager_node PREFIX "")
-add_dependencies(${PROJECT_NAME}_behavior_manager_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-target_link_libraries(${PROJECT_NAME}_behavior_manager_node
-  cpprestsdk::cpprest
-  ${catkin_LIBRARIES}
-)
+#add_executable(${PROJECT_NAME}_behavior_manager_node
+#  src/multi_topology_behavior_manager_node.cpp
+#  src/multi_topology_behavior_manager.cpp
+#)
+#set_target_properties(${PROJECT_NAME}_behavior_manager_node PROPERTIES OUTPUT_NAME ${PROJECT_NAME}_behavior_manager_node PREFIX "")
+#add_dependencies(${PROJECT_NAME}_behavior_manager_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+#target_link_libraries(${PROJECT_NAME}_behavior_manager_node
+#  cpprestsdk::cpprest
+#  ${catkin_LIBRARIES}
+#)
 
 #############
 ## Install ##
