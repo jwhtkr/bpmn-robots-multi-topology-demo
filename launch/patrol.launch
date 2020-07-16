@@ -1,10 +1,11 @@
-<!-- rand_goal.launch -->
+<!-- patrol.launch -->
 <launch>
   <arg name="mocab_address" default="192.168.1.109" />
   <arg name="robot1_tag"    default="turtlebot1" />
-  <arg name="robot2_tag"    default="turtlebot0" />
+  <!-- <arg name="robot2_tag"    default="turtlebot2" /> -->
   <arg name="robot3_tag"    default="turtlebot0" />
   <arg name="robot4_tag"    default="wafflebot0" />
+  <arg name="robot2_tag"    default="192.168.1.126" />
 
   <node pkg="vrpn_client_ros" type="vrpn_client_node" name="vrpn_client_node" output="screen" >
     <rosparam subst_value="true">
@@ -18,23 +19,26 @@
     <remap from="vrpn_client_node/turtlebot1/pose" to="robot1/pose" />
   </node>
 
-  <include file="$(find multi_topology_demo)/launch/robot_setup.launch" ns="robot1" >
+  <!-- <include file="$(find multi_topology_demo)/launch/robot_setup.launch" ns="robot1" >
     <arg name="namespace"         value="robot1"        />
     <arg name="address"           value="$(arg robot1_tag)"        />
     <arg name="user"              value="bot"                    />
+  </include> -->
+
+  <include file="$(find multi_topology_demo)/launch/robot_setup.launch" ns="robot2" >
+    <arg name="namespace"         value="robot2"        />
+    <arg name="address"           value="$(arg robot2_tag)"        />
+    <arg name="user"              value="bot"                     />
+  </include>
+  
+  <include file="$(find turtlebot_sim)/launch/line_world_laser_scan.launch">
+    <arg name="namespace" value="/robot1" />
   </include>
 
-  <node name="go_to_goal" pkg="controllers" type="simple_go_to_goal" output="screen" ns="robot1" >
-    <param name="nominal_velocity" value="0.5" />
-    <param name="trans_vel_gain"   value="0.5" />
-    <param name="rot_vel_gain"     value="1.0" />
-  </node>
+  <!-- <include file="$(find turtlebot_sim)/launch/line_world_laser_scan.launch"> -->
+    <!-- <arg name="namespace" value="/robot2" /> -->
+  <!-- </include> -->
 
- <!-- <include file="$(find multi_topology_demo)/launch/robot_setup.launch" ns="robot2" >-->
- <!--   <arg name="namespace"         value="robot2"        />-->
- <!--   <arg name="address"           value="$(arg robot2_tag)"        />-->
- <!--   <arg name="user"              value="noah"                     />-->
- <!-- </include>-->
 
  <!-- <node name="go_to_goal" pkg="controllers" type="simple_go_to_goal" output="screen" ns="robot2" >-->
  <!--   <param name="nominal_velocity" value="0.5" />-->
@@ -54,7 +58,6 @@
  <!--  <arg name="address"           value="$(arg robot4_tag)"        />-->
  <!-- </include>-->
 
-  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find turtlebot_launch)/rviz/Turtlebot_multi.rviz"/>
 
   <include file="$(find gazebo_ros)/launch/empty_world.launch" if="false" >
     <arg name="world_name" value="$(find turtlebot3_gazebo)/worlds/empty.world"/>
@@ -65,6 +68,21 @@
     <arg name="debug" value="false"/>
   </include>
 
+  <!-- Additional Simulation Nodes -->
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find turtlebot_launch)/rviz/Turtlebot_multi.rviz"/>
+
   <node name="topology_graph" pkg="go2goal" type="topology_goal_generator" output="screen" />
 
+  <node respawn="true" pkg="joy" type="joy_node" name="turtle_joy" >
+    <param name="dev" type="string" value="/dev/input/js0" />
+    <param name="deadzone" value="0.12" />
+  </node>
+
+  <include file="$(find position_rebroadcaster)/launch/position_rebroadcaster.launch">
+  </include>
+
+  <node pkg="network_topology_emulator" type="network_emulator.py" name="network_emulator_node" args="--viz --rate 15">
+      <remap from="network_graph" to="topology_graph"/>
+  </node>
+  
 </launch>

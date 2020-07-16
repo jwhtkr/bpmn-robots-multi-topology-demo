@@ -4,7 +4,7 @@
   <arg name="namespace"         default="" />
 
   <arg name="address"    default="" />
-  <arg name="env-loader" default="~/catkin_ws/env.sh" />
+  <arg name="env-loader" default="/home/bot/catkin_ws/env.sh" />
   <arg name="user"       default="" />
 
   <param name="odom_frame" value="$(arg namespace)/odom" />
@@ -14,7 +14,7 @@
     <arg name="robot_tf_prefix" value="$(arg namespace)/" />
   </include>
 
-  <machine name="$(arg namespace)" address="$(arg address)" user="$(arg user)" env-loader="$(arg env-loader)" password="turtlebot" />
+  <machine name="$(arg namespace)" address="$(arg address)" user="$(arg user)" env-loader="$(arg env-loader)" password="usurobotics" />
 
   <include file="$(find mocap_interface)/launch/odom_generator.launch" >
     <arg name="twist_topic" value="cmd_vel"                    />
@@ -33,7 +33,7 @@
     <param name="publish_frequency" type="double" value="50.0" />
   </node>
 
-  <node pkg="rosserial_python" type="serial_node.py" name="turtlebot3_core" output="screen" machine="$(arg namespace)" >
+  <node pkg="rosserial_python" type="serial_node.py" name="turtlebot3_robot" output="screen" machine="$(arg namespace)" >
     <param name="port"      value="/dev/ttyACM0"/>
     <param name="baud"      value="115200"/>
     <param name="tf_prefix" value="" />
@@ -41,5 +41,11 @@
   </node>
 
   <node pkg="turtlebot3_bringup" type="turtlebot3_diagnostics" name="diagnostics" output="screen" machine="$(arg namespace)"/>
+  <node pkg="hls_lfcd_lds_driver" type="hlds_laser_publisher"    name="lidar" machine="$(arg namespace)"/>
+ <!-- <node name="go_to_goal" pkg="controllers" type="patrol_g2g" output="screen" launch-prefix="" >
+    <param name="nominal_velocity" value="0.5" />
+    <param name="trans_vel_gain"   value="0.5" />
+    <param name="rot_vel_gain"     value="1.0" />
+  </node> -->
 
 </launch>
