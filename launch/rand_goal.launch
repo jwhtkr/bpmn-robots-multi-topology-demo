@@ -1,5 +1,4 @@
 <!-- rand_goal.launch -->
-
 <launch>
   <arg name="mocab_address" default="192.168.1.109" />
   <arg name="robot1_tag"    default="192.168.1.103" />
@@ -34,6 +33,7 @@
   <include file="$(find multi_topology_demo)/launch/robot_setup.launch" ns="robot1" if="false" >
     <arg name="namespace"         value="robot1"        />
     <arg name="address"           value="$(arg robot1_tag)"        />
+    <arg name="user"              value="bot"                    />
     <arg name="user"              value="bot"                    />
   </include>
 
