@@ -3,24 +3,12 @@
 <launch>
   <arg name="mocab_address" default="192.168.1.109" />
   <arg name="robot1_tag"    default="192.168.1.103" />
-  <arg name="robot2_tag"    default="192.168.1.124" />
+  <arg name="robot2_tag"    default="turtlebot0" />
   <arg name="robot3_tag"    default="192.168.1.131" />
   <arg name="robot4_tag"    default="wafflebot0" />
 
-  <node pkg="listen" type="listener.py" name="listener" />
-
+  <!--copy this node for more robots. Rename vrpn_client_node and edit remap-->
   <node pkg="vrpn_client_ros" type="vrpn_client_node" name="vrpn_client_node" output="screen" >
-    <rosparam subst_value="true">
-      server: $(arg mocab_address)
-      port: 3883
-      update_frequency: 100
-      trackers:
-        - robot1
-    </rosparam>
-<!--    <remap from="vrpn_client_node/turtlebot2/pose" to="robot2/pose" /> -->
-  </node>
-
-  <!-- <node pkg="vrpn_client_ros" type="vrpn_client_node" name="vrpn_client_node3" output="screen" if="false" >
     <rosparam subst_value="true">
       server: $(arg mocab_address)
       port: 3883
@@ -28,10 +16,10 @@
       trackers:
         - turtlebot3
     </rosparam>
-    <remap from="vrpn_client_node3/turtlebot3/pose" to="robot3/pose" />
+    <remap from="vrpn_client_node/turtlebot3/pose" to="robot3/pose" />
   </node>
 
-  <include file="$(find multi_topology_demo)/launch/robot_setup.launch" ns="robot1" if="false" >
+  <include file="$(find multi_topology_demo)/launch/robot_setup.launch" ns="robot1" if="false">
     <arg name="namespace"         value="robot1"        />
     <arg name="address"           value="$(arg robot1_tag)"        />
     <arg name="user"              value="bot"                    />
@@ -40,22 +28,22 @@
   <node name="go_to_goal" pkg="controllers" type="simple_go_to_goal" output="screen" ns="robot1" >
     <param name="nominal_velocity" value="0.5" />
     <param name="trans_vel_gain"   value="0.5" />
-    <param name="rot_vel_gain"     value="1.5" />
+    <param name="rot_vel_gain"     value="1.0" />
   </node>
-
+  
   <include file="$(find multi_topology_demo)/launch/robot_setup.launch" ns="robot2" if="false" > 
     <arg name="namespace"         value="robot2"        />
     <arg name="address"           value="$(arg robot2_tag)"        />
-    <arg name="user"              value="bot"                     />
+    <arg name="user"              value="noah"                     />
   </include>
 
   <node name="go_to_goal" pkg="controllers" type="simple_go_to_goal" output="screen" ns="robot2" >
     <param name="nominal_velocity" value="0.5" />
     <param name="trans_vel_gain"   value="0.5" />
-    <param name="rot_vel_gain"     value="1.5" />
+    <param name="rot_vel_gain"     value="1.0" />
   </node>
 
-  <include file="$(find multi_topology_demo)/launch/robot_setup3.launch" ns="robot3" if="false" >
+  <include file="$(find multi_topology_demo)/launch/robot_setup.launch" ns="robot3" if="true" >
     <arg name="namespace"         value="robot3"        />
     <arg name="address"           value="$(arg robot3_tag)"        />
     <arg name="user"              value="bot"                     />
@@ -64,7 +52,7 @@
   <node name="go_to_goal" pkg="controllers" type="simple_go_to_goal" output="screen" ns="robot3" >
     <param name="nominal_velocity" value="0.5" />
     <param name="trans_vel_gain"   value="0.5" />
-    <param name="rot_vel_gain"     value="1.5" />
+    <param name="rot_vel_gain"     value="1.0" />
   </node>
 
   <include file="$(find multi_topology_demo)/launch/robot_setup.launch" ns="$robot4" if="false" >
@@ -76,8 +64,8 @@
   <node name="go_to_goal" pkg="controllers" type="simple_go_to_goal" output="screen" ns="robot4" >
     <param name="nominal_velocity" value="0.5" />
     <param name="trans_vel_gain"   value="0.5" />
-    <param name="rot_vel_gain"     value="1.5" />
-  </node> 
+    <param name="rot_vel_gain"     value="1.0" />
+  </node>
 
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(find turtlebot_launch)/rviz/Turtlebot_multi.rviz"/>
 
@@ -90,6 +78,6 @@
     <arg name="debug" value="false"/>
   </include>
 
-  <node name="topology_graph" pkg="go2goal" type="topology_goal_generator" output="screen" /> -->
+  <node name="topology_graph" pkg="go2goal" type="topology_goal_generator" output="screen" />
 
 </launch>

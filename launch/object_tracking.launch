@@ -1,0 +1,18 @@
+<!-- This file is designed to launch mocap to track a single object to a pose message  -->
+<launch>
+
+    <arg name="mocab_address" default="192.168.1.109" />
+    <arg name="object" default="lidar" />
+
+
+    <node pkg="vrpn_client_ros" type="vrpn_client_node" name="vrpn_client_node" output="screen">
+        <rosparam subst_value="true">
+        server: $(arg mocab_address)
+        port: 3883
+        update_frequency: 100
+        trackers:
+            - $(arg object)
+        </rosparam>
+        <remap from="vrpn_client_node/$(arg object)/pose" to="/pose" />
+    </node>
+</launch>
